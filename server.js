@@ -46,7 +46,7 @@ app.use(flash()) //flash when the signup fails
 app.use('/', indexRouter)
 // app.use('/menu', menuRouter)
 // app.use('/login', loginRouter)
- 
+
 app.listen(process.env.PORT, ()=>{
     console.log('Server is running, you better catch it!')
 })
