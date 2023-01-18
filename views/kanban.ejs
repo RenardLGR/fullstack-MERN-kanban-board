@@ -9,8 +9,11 @@
 </head>
 <body>
     <h1>
-        <%= tasksNotStarted.title %>
+        From controller : <%= tasksNotStarted.title %>
     </h1>
+    <h2>
+        From JS : 
+    </h2>
     <div class="kanban">
         <!-- Column not started tasks -->
         <div class="kanban__column" id="kanban__column__not__started">
@@ -24,7 +27,7 @@
                     </div>
                 <% } %>
             </div>
-            <button class="kanban__add-item" type="button">+ Add</button>
+            <button class="kanban__add-item" type="button" id="kanban__add__not__started">+ Add</button>
         </div>
         <!-- Column in progress tasks -->
         <div class="kanban__column" id="kanban__column__in__progress">
@@ -38,7 +41,7 @@
                     </div>
                 <% } %>
             </div>
-            <button class="kanban__add-item" type="button">+ Add</button>
+            <button class="kanban__add-item" type="button" id="kanban__add__in__progress">+ Add</button>
         </div>
         <!-- Column completed tasks -->
         <div class="kanban__column" id="kanban__column__completed">
@@ -52,7 +55,7 @@
                     </div>
                 <% } %>
             </div>
-            <button class="kanban__add-item" type="button">+ Add</button>
+            <button class="kanban__add-item" type="button" id="kanban__add__completed">+ Add</button>
         </div>
         <!-- Column on hold tasks -->
         <div class="kanban__column" id="kanban__column__on__hold">
@@ -66,7 +69,7 @@
                     </div>
                 <% } %>
             </div>
-            <button class="kanban__add-item" type="button">+ Add</button>
+            <button class="kanban__add-item" type="button" id="kanban__add__on__hold">+ Add</button>
         </div>
     </div>
     <script src="js/main.js" type="module"></script>
