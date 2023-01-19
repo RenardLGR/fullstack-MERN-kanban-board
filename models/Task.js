@@ -7,7 +7,7 @@ TaskSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "Open"
+    required: true
   },
   date: {
     type: Date,
