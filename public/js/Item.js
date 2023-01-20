@@ -22,18 +22,20 @@ export default class Item{
                     headers: {'Content-type': 'application/json'},
                     body: JSON.stringify({
                         description: 'empty',
+                        // description: (new Date()).toString(),
                         status: colTitle
                     })
                 })
                 const data = await response.json()
                 console.log(data)
-                this.elements.root.dataset.id = data.id
+                this.elements.root.dataset.id = data._id
                 //location.reload()
             }catch(err){
                 console.log(err)
             }
         }
         createItem()
+
 
         const onBlur = async () => { //when we click away from the input bow of a new/edit item //when focus is lost
         //if the content has changed, update local storage
@@ -44,9 +46,9 @@ export default class Item{
             }
 
             this.content = newContent
-
             try{
                 let itemId = this.elements.root.dataset.id
+                console.log(itemId, this.content)
                 const response = await fetch('/editItem', {
                     method: 'PUT',
                     headers: {'Content-type': 'application/json'},
