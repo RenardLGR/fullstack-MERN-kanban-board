@@ -6,6 +6,13 @@ export default class Column{
 
         this.elements.title = colDiv
         this.elements.items = colDiv.querySelector(".kanban__column-items")
+        this.elements.tasks = Array.from(colDiv.querySelectorAll(".kanban__item")).map(div => {
+            let colTitle = this.elements.title
+            let content = div.querySelector('.kanban__item-input').innerText
+            console.log(content);
+            return new Item(colTitle, content)
+        })
+
         this.elements.addItemButton = colDiv.querySelector('.kanban__add-item')
 
         this.elements.addItemButton.addEventListener('click', (event) => {
@@ -13,14 +20,17 @@ export default class Column{
             switch (colName) {
                 case 'kanban__add__not__started':
                     console.log('not__started clicked');
+                    this.addItem('Not Started')
                     break;
     
                 case 'kanban__add__in__progress':
                     console.log('in__progress clicked');
+                    this.addItem('In Progress')
                     break;
     
                 case 'kanban__add__completed':
                     console.log('completed clicked');
+                    this.addItem('Completed')
                     break;
     
                 case 'kanban__add__on__hold':
@@ -66,6 +76,7 @@ export default class Column{
 
     addItem(colTitle){
         const item = new Item(colTitle, '')
+        item.createItem()
         this.elements.items.appendChild(item.elements.root)
     }
 }

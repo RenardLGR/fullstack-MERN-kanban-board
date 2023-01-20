@@ -7,34 +7,14 @@ export default class Item{
         const bottomDropZone = DropZone.createDropZone()
 
         this.elements = {}
+        this.elements.colTitle = colTitle
         this.elements.root = Item.createRoot()
         this.elements.input = this.elements.root.querySelector(".kanban__item-input")
         this.elements.root.dataset.id
         this.elements.input.textContent = content
         this.content = content
 
-        this.elements.root.appendChild(bottomDropZone) //append our dropzone to our elements
-
-        const createItem = async () => { //create item in the DB
-            try{
-                const response = await fetch('/postItem', {
-                    method: 'POST',
-                    headers: {'Content-type': 'application/json'},
-                    body: JSON.stringify({
-                        description: 'empty',
-                        // description: (new Date()).toString(),
-                        status: colTitle
-                    })
-                })
-                const data = await response.json()
-                console.log(data)
-                this.elements.root.dataset.id = data._id
-                //location.reload()
-            }catch(err){
-                console.log(err)
-            }
-        }
-        createItem()
+        //this.elements.root.appendChild(bottomDropZone) //append our dropzone to our elements
 
 
         const onBlur = async () => { //when we click away from the input bow of a new/edit item //when focus is lost
@@ -66,7 +46,8 @@ export default class Item{
         }
 
         this.elements.input.addEventListener('blur', onBlur)//when click away from the input event
-        this.elements.root.addEventListener('dblclick', () => {
+
+        this.elements.root.addEventListener('dblclick', () => { //deleting item by double clicking
             const check = confirm("Are you sure you want to delete this task")
 
             if(check){ //if ok/confirm was clicked
@@ -84,6 +65,26 @@ export default class Item{
         this.elements.input.addEventListener("drop", (event) => {
             event.preventDefault()
         })
+    }
+
+    async createItem(){ //create item in the DB
+        try{
+            const response = await fetch('/postItem', {
+                method: 'POST',
+                headers: {'Content-type': 'application/json'},
+                body: JSON.stringify({
+                    description: 'empty',
+                    // description: (new Date()).toString(),
+                    status: this.elements.colTitle
+                })
+            })
+            const data = await response.json()
+            console.log(data)
+            this.elements.root.dataset.id = data._id
+            //location.reload()
+        }catch(err){
+            console.log(err)
+        }
     }
 
     static createRoot(){

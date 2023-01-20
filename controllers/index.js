@@ -3,11 +3,12 @@ const Task = require('../models/Task.js')
 module.exports = {
     getKanban: async (req, res) => {
         try {
-            // const tasks = await Task.find().sort().lean();
-            // const tasksNotStarted = tasks.filter(t => t.status === "Not Started")
-            // res.render("kanban.ejs", {title: {title: "it works"}});
-            // res.render("kanban.ejs", { tasksNotStarted: {title : "It works"}, controllerWorks: {title : "It works"}});
-            res.render("kanban.ejs", {controllerWorks: "Controller works"});
+            const tasks = await Task.find().sort().lean();
+            const tasksNotStarted = tasks.filter(t => t.status === "Not Started")
+            const tasksInProgress = tasks.filter(t => t.status === "In Progress")
+            const tasksCompleted = tasks.filter(t => t.status === "Completed")
+            const tasksOnHold = tasks.filter(t => t.status === "On Hold")
+            res.render("kanban.ejs", {controllerWorks: "Controller works", tasksNotStarted: tasksNotStarted, tasksInProgress: tasksInProgress, tasksCompleted: tasksCompleted, tasksOnHold: tasksOnHold});
           } catch (err) {
             console.log(err);
           }
@@ -37,7 +38,7 @@ module.exports = {
         }
     },
 
-    editStatus: async (req, res) => {
+    editStatus: async (req, res) => { //edit item status (change of column), for edit status, see above
 
     }
 }
