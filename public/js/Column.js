@@ -1,16 +1,15 @@
-import Item from "./Item.js"
+import NewItem from "./NewItem.js"
+import ExistingItem from "./ExistingItem.js"
 
 export default class Column{
     constructor(colDiv){
         this.elements = {}
 
-        this.elements.title = colDiv
+        this.elements.title = colDiv.querySelector('.kanban__column-title').innerText
         this.elements.items = colDiv.querySelector(".kanban__column-items")
         this.elements.tasks = Array.from(colDiv.querySelectorAll(".kanban__item")).map(div => {
             let colTitle = this.elements.title
-            let content = div.querySelector('.kanban__item-input').innerText
-            console.log(content);
-            return new Item(colTitle, content)
+            return new ExistingItem(div, colTitle)
         })
 
         this.elements.addItemButton = colDiv.querySelector('.kanban__add-item')
@@ -19,23 +18,19 @@ export default class Column{
             let colName = event.target.id
             switch (colName) {
                 case 'kanban__add__not__started':
-                    console.log('not__started clicked');
-                    this.addItem('Not Started')
+                    this.addItem(this.elements.title)
                     break;
     
                 case 'kanban__add__in__progress':
-                    console.log('in__progress clicked');
-                    this.addItem('In Progress')
+                    this.addItem(this.elements.title)
                     break;
     
                 case 'kanban__add__completed':
-                    console.log('completed clicked');
-                    this.addItem('Completed')
+                    this.addItem(this.elements.title)
                     break;
     
                 case 'kanban__add__on__hold':
-                    console.log('on__hold clicked');
-                    this.addItem('On Hold')
+                    this.addItem(this.elements.title)
                     break;
     
                 default:
@@ -43,6 +38,10 @@ export default class Column{
                     break;
             }
         })
+        
+    }
+
+    renderItem(){
         
     }
 
@@ -75,8 +74,8 @@ export default class Column{
     // }
 
     addItem(colTitle){
-        const item = new Item(colTitle, '')
-        item.createItem()
+        const item = new NewItem(colTitle, '')
+        item.createItem() //create an item with an empty description in the db
         this.elements.items.appendChild(item.elements.root)
     }
 }

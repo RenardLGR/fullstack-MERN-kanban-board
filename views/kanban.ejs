@@ -23,7 +23,6 @@
                 <% tasksNotStarted.forEach(t => { %>
                     <div class="kanban__item" draggable="true" data-id="<%=t._id%>">
                         <div class="kanban__item-input" contenteditable=""><%= t.description %></div>
-                        <div class="kanban__dropzone"></div>
                     </div>
                 <% }) %>
             </div>
@@ -37,7 +36,6 @@
                 <% tasksInProgress.forEach(t => { %>
                     <div class="kanban__item" draggable="true" data-id="<%=t._id %>">
                         <div class="kanban__item-input" contenteditable=""><%= t.description %></div>
-                        <div class="kanban__dropzone"></div>
                     </div>
                 <% }) %>
             </div>
@@ -51,7 +49,6 @@
                 <% tasksCompleted.forEach(t => { %>
                     <div class="kanban__item" draggable="true" data-id="<%=t._id%>">
                         <div class="kanban__item-input" contenteditable=""><%= t.description %></div>
-                        <div class="kanban__dropzone"></div>
                     </div>
                 <% }) %>
             </div>
@@ -65,7 +62,6 @@
                 <% tasksOnHold.forEach(t => { %>
                     <div class="kanban__item" draggable="true" data-id="<%=t._id%>">
                         <div class="kanban__item-input" contenteditable=""><%= t.description %></div>
-                        <div class="kanban__dropzone"></div>
                     </div>
                 <% }) %>
             </div>

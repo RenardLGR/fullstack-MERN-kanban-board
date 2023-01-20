@@ -1,21 +1,20 @@
 // import KanbanAPI from "../api/KanbanAPI.js"
 import DropZone from "./DropZone.js"
 
-export default class Item{
+export default class NewItem{
     constructor(colTitle, content){
 
         const bottomDropZone = DropZone.createDropZone()
 
         this.elements = {}
         this.elements.colTitle = colTitle
-        this.elements.root = Item.createRoot()
+        this.elements.root = NewItem.createRoot()
         this.elements.input = this.elements.root.querySelector(".kanban__item-input")
         this.elements.root.dataset.id
         this.elements.input.textContent = content
         this.content = content
 
-        //this.elements.root.appendChild(bottomDropZone) //append our dropzone to our elements
-
+        this.elements.root.appendChild(bottomDropZone) //append our dropzone to our elements
 
         const onBlur = async () => { //when we click away from the input bow of a new/edit item //when focus is lost
         //if the content has changed, update local storage
