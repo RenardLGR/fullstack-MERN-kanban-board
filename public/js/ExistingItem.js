@@ -57,7 +57,8 @@ export default class ExistingItem{
         })//when double click the input event //double click will delete the item
 
         this.elements.root.addEventListener("dragstart", (event) => {
-            event.dataTransfer.setData("text/plain", id)
+            console.log(this.elements.root.dataset.id);
+            event.dataTransfer.setData("text/plain", this.elements.root.dataset.id)
         })
 
         this.elements.input.addEventListener("drop", (event) => {

@@ -27,7 +27,6 @@ export default class NewItem{
             this.content = newContent
             try{
                 let itemId = this.elements.root.dataset.id
-                console.log(itemId, this.content)
                 const response = await fetch('/editItem', {
                     method: 'PUT',
                     headers: {'Content-type': 'application/json'},
@@ -58,7 +57,7 @@ export default class NewItem{
         })//when double click the input event //double click will delete the item
 
         this.elements.root.addEventListener("dragstart", (event) => {
-            event.dataTransfer.setData("text/plain", id)
+            event.dataTransfer.setData("text/plain", this.elements.root.dataset.id)
         })
 
         this.elements.input.addEventListener("drop", (event) => {

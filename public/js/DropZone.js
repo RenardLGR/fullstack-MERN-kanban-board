@@ -1,7 +1,7 @@
 // import KanbanAPI from "../api/KanbanAPI.js"
 
-export default class DropZone{
-    static createDropZone(){
+export default class DropZone {
+    static createDropZone() {
         const range = document.createRange() //chain of items
 
         range.selectNode(document.body) //hooking place i.e context node
@@ -19,38 +19,49 @@ export default class DropZone{
             dropZone.classList.remove('kanban__dropzone--active')
         }) //when an item is dragged away from the dragover
 
-        dropZone.addEventListener("drop", (event) => { //drag and drop logic
+        dropZone.addEventListener("drop", async (event) => { //drag and drop logic
             event.preventDefault()
 
-            dropZone.classList.remove('kanban__dropzone--active')
+            dropZone.classList.remove('kanban__dropzone--active');
 
-            const columnElement = dropZone.closest('.kanban__column') //find the closest element with the class of kanban__column
+            async function onBlur(dropZone) {
+                try {
+                    const columnElement = dropZone.closest('.kanban__column') //find the closest element with the class of kanban__column //target side
+                    const colName = columnElement.querySelector('.kanban__column-title').innerText //target col name
+                    const itemId = event.dataTransfer.getData("text/plain") //grab the data transfer, transfer initialized in NewItem.js and ExistingItem.js at drag start
+                    const droppedItemElement = document.querySelector(`[data-id="${itemId}"]`)
+                    const content = droppedItemElement.querySelector('.kanban__item-input').innerText
+        
+                    console.log(colName, itemId, content);
+                    const response = await fetch('/editStatus', {
+                        method: 'PUT',
+                        headers: { 'Content-type': 'application/json' },
+                        body: JSON.stringify({
+                            itemId: itemId,
+                            description: content,
+                            status: colName
+                        })
+                    })
+                    const data = await response.json()
+                    console.log(data)
 
-            const columnId = Number(columnElement.dataset.id) //get the id of the before closest element
+                    const insertAfter = dropZone.parentElement.classList.contains("kanban__item") ? dropZone.parentElement : dropZone; //make elements move around
 
-            const dropZonesInColumn = Array.from(columnElement.querySelectorAll(".kanban__dropzone")) //find all the possible dropzones
-
-            const droppedIndex = dropZonesInColumn.indexOf(dropZone) //location where the item was dropped
-
-            const itemId = Number(event.dataTransfer.getData("text/plain"))
-
-            const droppedItemElement = document.querySelector(`[data-id="${itemId}"]`)
-
-            const insertAfter = dropZone.parentElement.classList.contains("kanban__item") ? dropZone.parentElement : dropZone //check if it is dropped at the very bottom
-
-            if(droppedItemElement.contains(dropZone)){ //if try to drop the item from where it comes from, do nothing
-                return
+                    if (droppedItemElement.contains(dropZone)) {
+                        return;
+                    } //make elements move around
+        
+                    insertAfter.after(droppedItemElement); //make elements move around
+                    //location.reload()
+                } catch (err) {
+                    console.log(err)
+                }
             }
 
-            insertAfter.after(droppedItemElement) //insert to new location
-
-            KanbanAPI.updateItem(itemId, {
-                columnId,
-                position: droppedIndex
-            })//API call
+            await onBlur(dropZone)
 
         }) //when an item is dropped
-
         return dropZone //update UI
     }
+
 }
