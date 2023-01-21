@@ -58,6 +58,7 @@ export default class NewItem{
 
         this.elements.root.addEventListener("dragstart", (event) => {
             event.dataTransfer.setData("text/plain", this.elements.root.dataset.id)
+            //send itemId to the data transfer, data received in DropZone.js
         })
 
         this.elements.input.addEventListener("drop", (event) => {

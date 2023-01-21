@@ -1,4 +1,4 @@
-document.querySelector('h2').innerText += "It works"
+document.querySelector('h2').innerText += " JS works"
 
 import Column from "./Column.js"
 
