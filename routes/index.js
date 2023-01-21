@@ -8,6 +8,7 @@ router.get('/', indexController.getKanban)
 router.post('/postItem', indexController.postItem)
 router.put('/editItem', indexController.editItem)
 router.put('/editStatus', indexController.editStatus)
+router.delete('/deleteItem', indexController.deleteItem)
 
 
 module.exports = router

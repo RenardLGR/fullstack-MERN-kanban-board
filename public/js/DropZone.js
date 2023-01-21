@@ -24,7 +24,7 @@ export default class DropZone {
 
             dropZone.classList.remove('kanban__dropzone--active');
 
-            async function onBlur(dropZone) {
+            async function onDrop(dropZone) {
                 try {
                     const columnElement = dropZone.closest('.kanban__column') //find the closest element with the class of kanban__column //target side
                     const colName = columnElement.querySelector('.kanban__column-title').innerText //target col name
@@ -32,7 +32,7 @@ export default class DropZone {
                     const droppedItemElement = document.querySelector(`[data-id="${itemId}"]`)
                     const content = droppedItemElement.querySelector('.kanban__item-input').innerText
         
-                    console.log(colName, itemId, content);
+                    //console.log(colName, itemId, content);
                     const response = await fetch('/editStatus', {
                         method: 'PUT',
                         headers: { 'Content-type': 'application/json' },
@@ -58,7 +58,7 @@ export default class DropZone {
                 }
             }
 
-            await onBlur(dropZone)
+            await onDrop(dropZone)
 
         }) //when an item is dropped
         return dropZone //update UI

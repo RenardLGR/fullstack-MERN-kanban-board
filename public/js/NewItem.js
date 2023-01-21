@@ -45,11 +45,25 @@ export default class NewItem{
 
         this.elements.input.addEventListener('blur', onBlur)//when click away from the input event
 
-        this.elements.root.addEventListener('dblclick', () => { //deleting item by double clicking
+        this.elements.root.addEventListener('dblclick', async () => { //deleting item by double clicking
             const check = confirm("Are you sure you want to delete this task")
 
             if(check){ //if ok/confirm was clicked
-                //KanbanAPI.deleteItem(id) //local storage call
+                const itemId = this.elements.root.dataset.id
+                try{
+                    const response = await fetch('/deleteItem', {
+                        method: 'DELETE',
+                        headers: {'Content-type': 'application/json'},
+                        body: JSON.stringify({
+                            itemId: itemId
+                        })
+                    })
+                    const data = await response.json()
+                    console.log(data)
+                }catch(err){
+                    console.log(err)
+                }
+
                 this.elements.input.removeEventListener("blur", onBlur)
                 this.elements.root.parentElement.removeChild(this.elements.root) //user interface call
             }

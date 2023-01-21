@@ -50,5 +50,16 @@ module.exports = {
         } catch (err) {
             console.log(err)
         }
+    },
+
+    deleteItem: async (req, res) => {
+        try{
+            const itemId = req.body.itemId
+            await Task.findOneAndDelete({_id: itemId})
+            console.log('Task deleted!')
+            res.json('Task deleted!')
+        }catch(err){
+            console.log(err)
+        }
     }
 }
