@@ -16,7 +16,7 @@ export default class NewItem{
 
         this.elements.root.appendChild(bottomDropZone) //append our dropzone to our elements
 
-        const onBlur = async () => { //when we click away from the input bow of a new/edit item //when focus is lost
+        const onBlur = async () => { //when we click away from the input box of a new/edit item //when focus is lost
         //if the content has changed, update local storage
             const newContent = this.elements.input.textContent.trim()
 

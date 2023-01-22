@@ -10,7 +10,7 @@ export default class Column{
         this.elements.tasks = Array.from(colDiv.querySelectorAll(".kanban__item")).map(div => {
             let colTitle = this.elements.title
             return new ExistingItem(div, colTitle)
-        })
+        }) //make the dom elements from EJS item so we can manipulate them
 
         this.elements.addItemButton = colDiv.querySelector('.kanban__add-item')
 
@@ -38,10 +38,6 @@ export default class Column{
                     break;
             }
         })
-        
-    }
-
-    renderItem(){
         
     }
 
